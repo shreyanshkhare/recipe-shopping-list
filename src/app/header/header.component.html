@@ -1,24 +1,18 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Recipe Book</a>
+      <div class="navbar-brand">Recipe Book</div>
     </div>
 
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" *ngIf="isAuthenticated">
       <ul class="nav navbar-nav">
         <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
         <li routerLinkActive="active"><a routerLink="/shopping-list" >Shopping List</a></li>
       </ul>
-      <!-- Hiding now as of now not in scope-->
-      <!-- <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a href="#" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Save Data</a></li>
-            <li><a href="#">Fetch Data</a></li>
-          </ul>
-        </li>
-      </ul> -->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="dropdown-toggle" role="button">Manage</a></li>
+        <li><a (click)="onLogout()" class="dropdown-toggle" role="button">Logout</a></li>
+      </ul>
     </div>
   </div>
 </nav>
