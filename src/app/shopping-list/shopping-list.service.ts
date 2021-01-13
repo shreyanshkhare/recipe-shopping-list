@@ -21,6 +21,7 @@ addIngredient(ingredient:Ingredient){
 
  addIngredients(ingredients){
     this.ingredients.push(...ingredients)
+    this.updatedIngredients.emit(this.ingredients.slice())
 }
 
 }
