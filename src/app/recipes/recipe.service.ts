@@ -28,6 +28,10 @@ export class RecipeService {
         return this.recipes[index];
       }
 
+      getRecipes() {
+        return this.recipes.slice();
+    }
+
       updateRecipe(index: number, newRecipe: Recipe) {
         this.recipes[index] = newRecipe;
         this.recipesChanged.next(this.recipes.slice());
