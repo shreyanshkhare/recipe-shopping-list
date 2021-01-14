@@ -48,4 +48,10 @@ export class RecipeService {
     console.log(this.recipes)
     this.recipesChanged.next(this.recipes.slice());
   } 
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+    console.log('this.recipes',this.recipes)
+  }
 }
