@@ -41,5 +41,11 @@ export class RecipeService {
         this.shoppingList.addIngredients(ingredients)
     }
 
-      
+     deleteRecipe(index: number) {
+       console.log(index)
+       console.log(this.recipes)
+    this.recipes.splice(index, 1);
+    console.log(this.recipes)
+    this.recipesChanged.next(this.recipes.slice());
+  } 
 }
