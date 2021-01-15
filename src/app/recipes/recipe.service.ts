@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import {Recipe} from './recipe.model';
 import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
@@ -22,7 +23,7 @@ export class RecipeService {
       [new Ingredient('Buns', 2), new Ingredient('Meat', 1)]
     )
   ];
-  constructor(private shoppingList:ShoppingListService){}
+  constructor(private shoppingList:ShoppingListService,private toastr: ToastrService){}
 
       getRecipe(index: number) {
         return this.recipes[index];
@@ -34,24 +35,32 @@ export class RecipeService {
 
       updateRecipe(index: number, newRecipe: Recipe) {
         this.recipes[index] = newRecipe;
+        this.toastr.success("Recipe Updated Successfully","Success",{
+          positionClass: 'toast-top-center',
+        });
         this.recipesChanged.next(this.recipes.slice());
       }
 
       addIngredients(ingredients:Ingredient){
         this.shoppingList.addIngredients(ingredients)
+        this.toastr.success("Ingredients Added Successfully","Success",{
+          positionClass: 'toast-top-center',
+        });
     }
 
      deleteRecipe(index: number) {
-       console.log(index)
-       console.log(this.recipes)
     this.recipes.splice(index, 1);
-    console.log(this.recipes)
+    this.toastr.success("Recipe Deleted Successfully","Success",{
+      positionClass: 'toast-top-center',
+    });
     this.recipesChanged.next(this.recipes.slice());
   } 
 
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
+    this.toastr.success("Recipe Added Successfully","Success",{
+      positionClass: 'toast-top-center',
+    });
     this.recipesChanged.next(this.recipes.slice());
-    console.log('this.recipes',this.recipes)
   }
 }
