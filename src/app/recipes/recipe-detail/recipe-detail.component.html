@@ -1,4 +1,7 @@
 <div class="row">
+  <app-modal (save)="onDeleteRecipe()" (close)="cancelChanges()" *ngIf="isVisible">
+    <p>Want to delete this recipe?</p>
+  </app-modal>
   <div class="col-xs-12">
     <img
       [src]="recipe.imagePath"
@@ -23,7 +26,7 @@
       <ul class="dropdown-menu">
         <li><a style="cursor: pointer;" (click)="addToShoppingList(recipe.ingredients)"> To Shopping List</a></li>
         <li><a (click)="onEditRecipe()" style="cursor: pointer;">Edit Recipe</a></li>
-        <li><a (click)="onDeleteRecipe()" style="cursor: pointer;">Delete Recipe</a></li>
+        <li><a (click)="deleteRecipe()" style="cursor: pointer;">Delete Recipe</a></li>
       </ul>
     </div>
   </div>

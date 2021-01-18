@@ -21,6 +21,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode = false;
   editedItemIndex: number;
   editedItem: Ingredient;
+  isVisible=false
 
   constructor(private slService: ShoppingListService) { }
 
@@ -59,10 +60,19 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onDelete() {
     this.slService.deleteIngredient(this.editedItemIndex);
     this.onClear();
+    this.isVisible = false;
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  confirmDelete(){
+    this.isVisible = true;
+  }
+
+  cancelChanges(){
+    this.isVisible = false;
   }
 
 }

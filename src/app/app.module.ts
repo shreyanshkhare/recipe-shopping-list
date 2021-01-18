@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { AuthComponent } from './auth/auth.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { ModalComponent } from './shared/modal/modal.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
     ShoppingEditComponent,
     DropdownDirective,
     RecipeStartComponent,
-    AuthComponent
+    AuthComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
