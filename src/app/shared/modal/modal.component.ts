@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
     selector: 'app-modal',
@@ -8,10 +8,8 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 })
 
 export class ModalComponent implements OnInit{
-    @ViewChild('modal') mo:ElementRef;
     @Input() message: string;
     @Input() title: string;
-    @Input() isOpen:boolean = false;
     @Output() save = new EventEmitter<void>();
     @Output() close=new EventEmitter<void>();
 
