@@ -3,7 +3,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 import { RecipeService } from '../recipe.service';
- 
+import { Recipe } from '../recipe.model';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-recipe-edit',
@@ -22,8 +24,9 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -40,10 +43,24 @@ export class RecipeEditComponent implements OnInit {
     //   this.recipeForm.value['imagePath'],
     //   this.recipeForm.value['ingredients']);
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value).subscribe(() => {
+        this.recipeService.getRecipes().subscribe((data: any) => {
+          this.recipeService.recipesChanged.next(data.recipes);
+          this.toastr.success("Ingredients Added Successfully", "Success", {
+            positionClass: 'toast-top-center',
+          });
+        }
+        )
+      })
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
-    } 
+      console.log('this.recipeService.recipes0',this.recipeService.recipes)
+      this.recipeService.addRecipe(this.recipeForm.value).subscribe(data => {
+        this.recipeService.recipesChanged.next([...this.recipeService.recipes, data])
+        this.toastr.success("Ingredients Added Successfully", "Success", {
+          positionClass: 'toast-top-center',
+        });
+      })
+    }
     this.onCancel();
   }
 
