@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Ingredient } from '../shared/ingredient.model';
-const endpoint = 'http://localhost:5000/';
+const endpoint = 'https://premchalmeti.com/recipe/';
 @Injectable()
 export class ShoppingListService {
 
