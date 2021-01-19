@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ViewChild
+  ViewChild,
+  Input
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -21,21 +22,25 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode = false;
   editedItemIndex: number;
   editedItem: Ingredient;
-  isVisible=false
+  isVisible = false
+  ingredient = Ingredient;
 
   constructor(private slService: ShoppingListService) { }
 
   ngOnInit() {
     this.subscription = this.slService.startedEditing
       .subscribe(
-        (index: number) => {
-          this.editedItemIndex = index;
+        (id: number) => {
           this.editMode = true;
-          this.editedItem = this.slService.getIngredient(index);
-          this.slForm.setValue({
-            name: this.editedItem.name,
-            amount: this.editedItem.amount
-          })
+          this.editedItemIndex = id;
+          this.slService.getIngredient(id).subscribe(
+            (data: Ingredient) =>
+              this.slForm.setValue({
+                id: data.id,
+                name: data.name,
+                amount: data.amount
+              })
+          );
         }
       );
   }
@@ -44,7 +49,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const value = form.value;
     const newIngredient = new Ingredient(value.name, value.amount);
     if (this.editMode) {
-      this.slService.updateIngredient(this.editedItemIndex, newIngredient);
+      // this.slService.updateIngredient(this.editedItemIndex, newIngredient);
     } else {
       this.slService.addIngredient(newIngredient);
     }
@@ -57,21 +62,28 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.editMode = false;
   }
 
-  onDelete() {
-    this.slService.deleteIngredient(this.editedItemIndex);
+
+  onDelete(): void {
     this.onClear();
     this.isVisible = false;
+    this.slService.deleteIngredient(this.editedItemIndex)
+      .subscribe(() => {
+        this.slService.getIngredients();
+      }, (err) => {
+        console.log(err);
+      }
+      );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  confirmDelete(){
+  confirmDelete() {
     this.isVisible = true;
   }
 
-  cancelChanges(){
+  cancelChanges() {
     this.isVisible = false;
   }
 
