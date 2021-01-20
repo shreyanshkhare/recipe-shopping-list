@@ -1,0 +1,5 @@
+.dropdown-menu li:hover a{
+    background-color: rgba(59, 130, 246, 0.5);
+    color:#fff;
+    font-weight: bold;
+}

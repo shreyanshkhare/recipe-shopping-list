@@ -17,9 +17,15 @@
       </div>
       <div class="row">
         <div class="col-xs-12 mb-4">
-          <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode ? 'Update' : 'Add' }}</button>
-          <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="editMode">Delete</button>
-          <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+          <button
+            class="btn btn-success rounded-full font-bold text-white px-8 py-3 transition duration-300 ease-in-out hover:bg-green-600 mr-6"
+            type="submit" [disabled]="!f.valid">{{ editMode ? 'Update' : 'Add' }}</button>
+          <button
+            class="btn btn-danger rounded-full font-bold text-white px-8 py-3 transition duration-300 ease-in-out hover:bg-red-600 mr-6"
+            type="button" (click)="onDelete()" *ngIf="editMode">Delete</button>
+          <button
+            class="bg-blue-500 rounded-full font-bold text-white px-8 py-3 transition duration-300 ease-in-out hover:bg-blue-600 mr-6"
+            type="button" (click)="onClear()">Clear</button>
         </div>
       </div>
     </form>

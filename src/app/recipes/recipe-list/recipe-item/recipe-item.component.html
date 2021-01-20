@@ -1,8 +1,8 @@
 <a style="cursor: pointer;" [routerLink]="[index]" class="my-4 list-group-item clearfix bg-blue-100 hover:bg-blue-300"
   routerLinkActive="activeRow">
   <div class="pull-left">
-    <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-    <p class="list-group-item-text">{{ recipe.description }}</p>
+    <h4 class="list-group-item-heading font-bold">{{ recipe.name }}</h4>
+    <p class="list-group-item-text font-normal">{{ recipe.description }}</p>
   </div>
   <span class="pull-right">
     <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="w-20 h-20 rounded-full" style="max-height: 50px;">
