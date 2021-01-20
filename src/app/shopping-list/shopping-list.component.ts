@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shopping-list',
@@ -13,16 +14,19 @@ export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[] = [];
   private subscription: Subscription;
 
-  constructor(private shoppingList: ShoppingListService) { }
+  constructor(private shoppingList: ShoppingListService, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.shoppingList.getIngredients().subscribe((resp: any) => {
-      this.ingredients = resp.items;
-    });
     this.subscription = this.shoppingList.updatedIngredients.subscribe(
-      (ingredient: Ingredient[]) => this.ingredients = ingredient
+      (ingredient) => this.shoppingList.ingredients = ingredient
     )
+    this.shoppingList.getIngredients();
+    this.shoppingList.updatedIngredients.subscribe((items: any) => {
+      this.ingredients = items;
+    });
   }
+
+
 
   onEditItem(id: number) {
     this.shoppingList.startedEditing.next(id);

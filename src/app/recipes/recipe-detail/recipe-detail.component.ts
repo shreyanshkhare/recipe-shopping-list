@@ -42,9 +42,9 @@ export class RecipeDetailComponent implements OnInit {
 
   onDeleteRecipe() {
     this.recipeService.deleteRecipe(this.id).subscribe(() =>
-    this.toastr.success("Ingredients Added Successfully", "Success", {
-          positionClass: 'toast-top-center',
-        })
+      this.toastr.success("Ingredients Added Successfully", "Success", {
+        positionClass: 'toast-top-center',
+      })
       // this.recipeService.getRecipes().subscribe((rec: any) => {
       //   this.recipeService.recipesChanged.next(rec.recipes)
       //   this.toastr.success("Ingredients Added Successfully", "Success", {
@@ -53,7 +53,7 @@ export class RecipeDetailComponent implements OnInit {
       // })
     )
     this.isVisible = false;
-    console.log('check',this.recipeService.recipes)
+    console.log('check', this.recipeService.recipes)
     this.router.navigate(['/recipes']);
   }
 

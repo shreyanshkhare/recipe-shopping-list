@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 
 import { Ingredient } from '../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -25,7 +26,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   isVisible = false
   ingredient = Ingredient;
 
-  constructor(private slService: ShoppingListService) { }
+  constructor(private slService: ShoppingListService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.subscription = this.slService.startedEditing
@@ -47,14 +48,28 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newIngredient = new Ingredient(value.name, value.amount);
+    const newIngredient = { id: value.id, name: value.name, amount: value.amount }
     if (this.editMode) {
-      // this.slService.updateIngredient(this.editedItemIndex, newIngredient);
+      this.slService.updateIngredient(this.editedItemIndex, newIngredient)
+        .subscribe((resp) => {
+          this.onClear();
+          this.isVisible = false;
+          this.toastr.success("Ingredient Updated Successfully", "Success");
+        }, (err) => {
+          this.toastr.error("Something went wrong", "Error");
+        })
     } else {
-      this.slService.addIngredient(newIngredient);
+      this.editMode = false;
+      form.reset();
+      this.slService.addIngredient(newIngredient)
+        .subscribe((resp) => {
+          this.onClear();
+          this.isVisible = false;
+          this.toastr.success("Ingredient Added Successfully", "Success");
+        }, (err) => {
+          this.toastr.error("Something went wrong", "Error");
+        })
     }
-    this.editMode = false;
-    form.reset();
   }
 
   onClear() {
@@ -63,24 +78,20 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
 
-  onDelete(): void {
-    this.onClear();
-    this.isVisible = false;
-    this.slService.deleteIngredient(this.editedItemIndex)
-      .subscribe(() => {
-        this.slService.getIngredients();
-      }, (err) => {
-        console.log(err);
-      }
-      );
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  confirmDelete() {
-    this.isVisible = true;
+  confirmDelete(): void {
+    this.slService.deleteIngredient(this.editedItemIndex)
+      .subscribe(() => {
+        this.onClear();
+        this.isVisible = false;
+        this.toastr.success("Ingredient Deleted Successfully", "Success");
+      }, (err) => {
+        this.toastr.error("Something went wrong", "Error");
+      }
+      );
   }
 
   cancelChanges() {

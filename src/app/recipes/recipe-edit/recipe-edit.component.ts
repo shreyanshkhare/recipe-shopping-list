@@ -53,7 +53,7 @@ export class RecipeEditComponent implements OnInit {
         )
       })
     } else {
-      console.log('this.recipeService.recipes0',this.recipeService.recipes)
+      console.log('this.recipeService.recipes0', this.recipeService.recipes)
       this.recipeService.addRecipe(this.recipeForm.value).subscribe(data => {
         this.recipeService.recipesChanged.next([...this.recipeService.recipes, data])
         this.toastr.success("Ingredients Added Successfully", "Success", {

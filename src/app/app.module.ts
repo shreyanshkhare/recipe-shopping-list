@@ -41,7 +41,10 @@ import { ModalComponent } from './shared/modal/modal.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
