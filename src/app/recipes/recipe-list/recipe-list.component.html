@@ -1,17 +1,15 @@
 <div class="loader" *ngIf="loading"></div>
 <div class="row" *ngIf="!loading">
-  <div class="col-xs-12">
-    <button class="btn btn-success mb-4" (click)="addNewRecipe()">New Recipe</button>
+  <div class="col-xs-12 mb-4">
+    <button
+      class="bg-blue-500 rounded-full font-bold text-white px-4 py-4 transition duration-300 ease-in-out hover:bg-blue-600 mr-6"
+      (click)="addNewRecipe()">Add New Recipe</button>
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="col-xs-12">
-    <app-recipe-item
-      *ngFor="let recipeEl of recipes; let i = index"
-      [recipe]="recipeEl"
-      [index]="recipeEl.id"
-    ></app-recipe-item>
+    <app-recipe-item *ngFor="let recipeEl of recipes; let i = index" [recipe]="recipeEl" [index]="recipeEl.id">
+    </app-recipe-item>
   </div>
 </div>
-
