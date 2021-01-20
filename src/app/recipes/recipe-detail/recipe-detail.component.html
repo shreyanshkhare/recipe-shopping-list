@@ -1,5 +1,5 @@
 <div class="row">
-  <app-modal [message]="message" (save)="onDeleteRecipe()" (close)="cancelChanges()" *ngIf="isVisible">
+  <app-modal (save)="onDeleteRecipe()" (close)="cancelChanges()" *ngIf="isVisible">
     <p>Want to delete this?</p>
   </app-modal>
   <div class="col-xs-12">
@@ -11,16 +11,16 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12">
-    <h1>{{ recipe.name }}</h1>
+  <div class="col-xs-12 my-2">
+    <h1 class="font-bold">{{ recipe.name }}</h1>
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12 my-2">
     <div class="btn-group" appDropdown>
       <button
         type="button"
-        class="btn btn-primary dropdown-toggle">
+        class="btn btn-success dropdown-toggle">
         Manage Recipe <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">

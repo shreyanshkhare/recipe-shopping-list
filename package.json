@@ -25,6 +25,7 @@
     "ngx-toastr": "^13.2.0",
     "prettier": "^2.2.1",
     "rxjs": "~6.6.0",
+    "tailwindcss": "^2.0.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

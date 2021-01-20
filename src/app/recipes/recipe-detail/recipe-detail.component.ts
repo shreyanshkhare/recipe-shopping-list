@@ -22,8 +22,13 @@ export class RecipeDetailComponent implements OnInit {
       (params: Params) => {
         this.id = +params['id'];
         this.recipe = this.recipeService.getRecipe(this.id)
+        if(!this.recipe){
+        this.recipeService.recipesChanged.subscribe((recipes:any)=>{
+          console.log('this.recipe',this.recipe)
+          this.recipe = recipes.find((data:any)=>data.id ===  this.id);
+        })}
       }
-    )
+    ) 
   }
 
   onEditRecipe() {
@@ -33,18 +38,14 @@ export class RecipeDetailComponent implements OnInit {
   addToShoppingList(recipe: Recipe) {
     this.recipeService.addIngredients(recipe).subscribe(data => {
       if (data.ok) {
-        this.toastr.success("Ingredients Added Successfully", "Success", {
-          positionClass: 'toast-top-center',
-        });
+        this.toastr.success("Ingredients Added Successfully", "Success");
       }
     })
   }
 
   onDeleteRecipe() {
     this.recipeService.deleteRecipe(this.id).subscribe(() =>
-      this.toastr.success("Ingredients Added Successfully", "Success", {
-        positionClass: 'toast-top-center',
-      })
+      this.toastr.success("Recipe deleted Successfully", "Success")
       // this.recipeService.getRecipes().subscribe((rec: any) => {
       //   this.recipeService.recipesChanged.next(rec.recipes)
       //   this.toastr.success("Ingredients Added Successfully", "Success", {

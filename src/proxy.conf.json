@@ -1,0 +1,7 @@
+{
+  "/recipe/*": {
+    "target": "https://premchalmeti.com",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

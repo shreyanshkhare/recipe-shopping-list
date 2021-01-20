@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -20,6 +20,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { AuthComponent } from './auth/auth.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { ModalComponent } from './shared/modal/modal.component';
+import { AuthInterceptorService } from './auth/auth-interceptor';
 
 
 @NgModule({
@@ -49,8 +50,8 @@ import { ModalComponent } from './shared/modal/modal.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule
-  ],
-  providers: [ShoppingListService],
+  ],  
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },ShoppingListService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

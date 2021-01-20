@@ -25,6 +25,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItem: Ingredient;
   isVisible = false
   ingredient = Ingredient;
+  title="Delete"
 
   constructor(private slService: ShoppingListService, private toastr: ToastrService) { }
 
@@ -96,6 +97,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   cancelChanges() {
     this.isVisible = false;
+  }
+
+  onDelete(){
+    this.isVisible = true;
   }
 
 }

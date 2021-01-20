@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -12,7 +13,7 @@ export class AuthService {
     user = new BehaviorSubject<User>(null);
     authObservable = new Observable();
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private http:HttpClient) {}
 
     private successHandler(email: string, onSuccess: Function) {
         const user = new User(email);
@@ -26,7 +27,18 @@ export class AuthService {
     }
 
     login(email: string, password: string, afterSuccess: Function) {
-        return this.successHandler(email, afterSuccess);
+        console.log(email,password)
+        return this.http.post('/recipe/login',{
+            "username": email,
+            "password": password
+        }
+        ).subscribe((data:any)=>{
+            console.log('data',data)
+            // const user = new User(email);
+            localStorage.setItem('userData', JSON.stringify(data));
+            this.user.next(data);
+            afterSuccess();
+        })
     }
 
     logout() {

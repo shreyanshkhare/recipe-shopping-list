@@ -1,16 +1,15 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default shadow-md bg-red-900">
   <div class="container-fluid">
     <div class="navbar-header">
-      <div class="navbar-brand">Recipe Book</div>
+      <div class="navbar-brand" style="color: white;">Recipe Book</div>
     </div>
 
     <div class="collapse navbar-collapse" *ngIf="isAuthenticated">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
-        <li routerLinkActive="active"><a routerLink="/shopping-list" >Shopping List</a></li>
+        <li class="activeTab" routerLinkActive="active"><a routerLink="/recipes" style="color: white;">Recipes</a></li>
+        <li class="activeTab" routerLinkActive="active"><a routerLink="/shopping-list" style="color: white;">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" class="dropdown-toggle" role="button">Manage</a></li>
         <li><a (click)="onLogout()" class="dropdown-toggle" role="button">Logout</a></li>
       </ul>
     </div>
