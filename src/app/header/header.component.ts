@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   onLogout() {
     this.authService.logout();

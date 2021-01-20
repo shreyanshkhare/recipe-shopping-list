@@ -1,24 +1,34 @@
 
-import { EventEmitter, Injectable } from '@angular/core';
-import { catchError } from 'rxjs/internal/operators';
+import { Injectable } from '@angular/core';
+import { catchError, tap } from 'rxjs/internal/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 const endpoint = 'https://premchalmeti.com/recipe/';
+const t = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTExMzcwMjcsImlhdCI6MTYxMTEzNTIyNywibmJmIjoxNjExMTM1MjI3LCJpZGVudGl0eSI6MX0.o9C-mGbfvoXPv87TlJ5w8HSZaLN1zqYvwLUHG0mqTcs";
+
+var headers_object = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': "JWT " + t
+});
+
+const httpOptions = {
+    headers: headers_object
+};
 @Injectable()
 export class ShoppingListService {
 
-    updatedIngredients = new EventEmitter<Ingredient[]>();
-    startedEditing = new Subject<Number>();
+    updatedIngredients = new BehaviorSubject<Ingredient[]>([]);
+    startedEditing = new Subject<number>();
+
+    constructor(private http: HttpClient) {
+    }
 
     private handleError(error: HttpErrorResponse): any {
         if (error.error instanceof ErrorEvent) {
-            console.error('An error occurred:', error.error.message);
+            console.log(error.error.message);
         } else {
-            console.error(
-                `Backend returned code ${error.status}, ` +
-                `body was: ${error.error}`);
+            console.log("Error code: ", error)
         }
         return throwError(
             'Something bad happened; please try again later.');
@@ -28,15 +38,25 @@ export class ShoppingListService {
         return body || {};
     }
 
-    private ingredients: Ingredient[] = [];
+    public ingredients: Ingredient[] = [];
 
-    constructor(private http: HttpClient) { }
 
-    getIngredients(): Observable<any> {
+
+
+    getIngredients() {
         return this.http.get(endpoint + "shoppingItemList").pipe(
-            map(this.extractData),
-            catchError(this.handleError)
-        );
+            catchError(this.handleError),
+            tap((res: any) => {
+                if (res) {
+                    this.ingredients = res.items;
+                    this.updatedIngredients.next(this.ingredients.slice());
+                }
+            })
+        ).subscribe((resp: any) => {
+            resp
+
+        });
+
     }
 
     getIngredient(id: number): Observable<any> {
@@ -49,26 +69,42 @@ export class ShoppingListService {
     addIngredient(ingredient: Ingredient): Observable<any> {
         return this.http.post(endpoint + "shoppingItem/" + ingredient.name, {
             "amount": ingredient.amount
-        }).pipe(
-            catchError(this.handleError)
+        }, httpOptions).pipe(
+            catchError(this.handleError),
+            tap((res: any) => {
+                this.ingredients = [...this.ingredients, res];
+                this.updatedIngredients.next(this.ingredients);
+            })
         );
     }
 
-    addIngredients(ingredients: Ingredient[]) {
-        this.ingredients.push(...ingredients)
-        this.updatedIngredients.emit(this.ingredients.slice())
-    }
+    // addIngredients(ingredients: Ingredient[]) {
+    //     this.ingredients.push(...ingredients)
+    //     // this.updatedIngredients.emit(this.ingredients.slice())
+    // }
 
     updateIngredient(index: number, newIngredient: Ingredient) {
-        this.ingredients[index] = newIngredient;
-        this.updatedIngredients.emit(this.ingredients.slice());
+        return this.http.put(endpoint + "shoppingItemUpdate/" + index, {
+            "name": newIngredient.name,
+            "amount": newIngredient.amount
+        }, httpOptions).pipe(
+            catchError(this.handleError),
+            tap((res: any) => {
+                var foundIndex = this.ingredients.findIndex(x => x.id == res.id);
+                this.ingredients[foundIndex] = res;
+                this.updatedIngredients.next(this.ingredients.slice());
+            })
+        );
     }
 
 
     deleteIngredient(id: number): Observable<any> {
-        console.log(endpoint + "shoppingItemUpdate/" + id)
-        return this.http.delete<any>(endpoint + "shoppingItemUpdate/" + id).pipe(
-            catchError(this.handleError)
+        return this.http.delete(endpoint + "shoppingItemUpdate/" + id, httpOptions).pipe(
+            catchError(this.handleError),
+            tap((res: any) => {
+                this.ingredients = this.ingredients.filter(x => x.id !== id);
+                this.updatedIngredients.next(this.ingredients.slice());
+            })
         );
     }
 
