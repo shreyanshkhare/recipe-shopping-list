@@ -43,23 +43,9 @@ export class RecipeEditComponent implements OnInit {
     //   this.recipeForm.value['imagePath'],
     //   this.recipeForm.value['ingredients']);
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value).subscribe(() => {
-        this.recipeService.getRecipes().subscribe((data: any) => {
-          this.recipeService.recipesChanged.next(data.recipes);
-          this.toastr.success("Ingredients Added Successfully", "Success", {
-            positionClass: 'toast-top-center',
-          });
-        }
-        )
-      })
-    } else {
-      console.log('this.recipeService.recipes0',this.recipeService.recipes)
-      this.recipeService.addRecipe(this.recipeForm.value).subscribe(data => {
-        this.recipeService.recipesChanged.next([...this.recipeService.recipes, data])
-        this.toastr.success("Ingredients Added Successfully", "Success", {
-          positionClass: 'toast-top-center',
-        });
-      })
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value).subscribe();
+    } else {  
+      this.recipeService.addRecipe(this.recipeForm.value).subscribe()
     }
     this.onCancel();
   }

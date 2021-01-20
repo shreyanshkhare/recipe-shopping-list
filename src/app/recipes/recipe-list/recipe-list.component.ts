@@ -20,10 +20,9 @@ export class RecipeListComponent implements OnInit {
     this.subscription = this.recipeService.recipesChanged.subscribe((recipe:Recipe[])=>{
       this.recipes = recipe;
     })
-    this.recipeService.getRecipes().subscribe(data=>{
-     const res = (data as any).recipes;
-     this.recipes = res;
-     this.recipeService.recipes = res;
+    this.recipeService.getRecipes()
+    this.recipeService.recipesChanged.subscribe((recipe:Recipe[])=>{
+      this.recipes = recipe;
     })
   }
 

@@ -53,7 +53,7 @@ export class RecipeDetailComponent implements OnInit {
       // })
     )
     this.isVisible = false;
-    console.log('check',this.recipeService.recipes)
+    // console.log('check',this.recipeService.recipes)
     this.router.navigate(['/recipes']);
   }
 
