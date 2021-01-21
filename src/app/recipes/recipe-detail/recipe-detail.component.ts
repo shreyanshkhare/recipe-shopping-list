@@ -19,18 +19,14 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private recipeService: RecipeService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.recipeService.getRecipes();
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
         this.recipe = this.recipeService.getRecipe(this.id)
-        console.log(this.recipe)
-        if (!this.recipe) {
           this.recipeService.recipesChanged.subscribe((recipes: any) => {
             console.log('this.recipe', this.recipe)
             this.recipe = recipes.find((data: any) => data.id === this.id);
           })
-        }
       }
     )
   }

@@ -23,7 +23,12 @@ export class AuthService {
     }
 
     signUp(email: string, password: string, afterSuccess: Function) {
-        this.successHandler(email, afterSuccess);
+        this.http.post('/recipe/UserRegister',{
+            "username": email,
+            "password": password
+            }).subscribe(()=>{
+                afterSuccess()
+            })
     }
 
     login(email: string, password: string, afterSuccess: Function) {

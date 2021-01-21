@@ -1,5 +1,4 @@
-<div class="loader" *ngIf="loading"></div>
-<div class="row" *ngIf="!loading">
+<div class="row">
   <div class="col-xs-12 mb-4">
     <button
       class="bg-blue-500 rounded-full font-bold text-white px-4 py-4 transition duration-300 ease-in-out hover:bg-blue-600 mr-6"
@@ -7,8 +6,11 @@
   </div>
 </div>
 <hr>
-<div class="row">
-  <div class="col-xs-12">
+<div class="flex flex-row">
+  <div class="w-full flex align-center justify-center mt-40" *ngIf="loading">
+    <div class="loader"></div>
+  </div>
+  <div class="col-xs-12" *ngIf="!loading">
     <app-recipe-item *ngFor="let recipeEl of recipes; let i = index" [recipe]="recipeEl" [index]="recipeEl.id">
     </app-recipe-item>
   </div>

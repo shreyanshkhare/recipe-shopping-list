@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 
 @Component({
     templateUrl: './auth.component.html',
+    styleUrls: ['./auth.component.css'],
     selector: 'app-auth'
 })
 
@@ -23,6 +24,10 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.router.navigate(['/recipes']);
     }
 
+    onRegister = () => {
+        this.isLoginMode = true;
+    }
+
     ngOnInit() {
         this.loginSubscription = this.authService.user.subscribe(user => {
             this.onSuccess();
@@ -35,16 +40,16 @@ export class AuthComponent implements OnInit, OnDestroy {
     
 
     onSubmit(form: NgForm) {
-        // if (!form.valid) {
-        //     return;
-        // }
+        if (!form.valid) {
+            return;
+        }
         
         const email = form.value.email;
         const password = form.value.password;
         if (this.isLoginMode) {
             this.authService.login(email, password, this.onSuccess);
         } else {
-            this.authService.signUp(email, password, this.onSuccess);
+            this.authService.signUp(email, password, this.onRegister);
         }
     }
 }

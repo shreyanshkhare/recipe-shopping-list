@@ -3,15 +3,19 @@
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div class="form-group">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" class="form-control" ngModel name="email" required email>
+                <input type="email" id="email" class="form-control" ngModel name="email" required email #email="ngModel">
+                <p class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid Email address.</p>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6">
+                <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6" #passwod="ngModel">
+                <p class="help-block" *ngIf="!passwod.valid && passwod.touched">Your password should be 6 character long.</p>
             </div>
             <div>
-                <button class="btn btn-primary" type="submit">{{isLoginMode ? 'Login' : 'Sign Up'}}</button> | 
-                <button class="btn btn-primary" (click)="onSwitchMode()" type="button">Switch to {{isLoginMode ? 'Sign Up':'Login'}}</button>
+                <button class="btn btn-primary" type="submit" [disabled]="!f.valid">{{isLoginMode ? 'Login' : 'Sign Up'}}</button> | 
+                <button class="btn btn-primary" (click)="onSwitchMode()" type="button">
+                    Switch to {{isLoginMode ? 'Sign Up':'Login'}}
+                </button>
             </div>
         </form>
     </div>
