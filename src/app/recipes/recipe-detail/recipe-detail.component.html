@@ -1,5 +1,5 @@
 <div class="row">
-  <app-modal (save)="onDeleteRecipe()" (close)="cancelChanges()" *ngIf="isVisible">
+  <app-modal (save)="onDeleteRecipe()" [title]="title" (close)="cancelChanges()" *ngIf="isVisible">
     <p>Want to delete this?</p>
   </app-modal>
   <div class="col-xs-12">

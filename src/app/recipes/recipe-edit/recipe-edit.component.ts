@@ -16,6 +16,7 @@ export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
+  title = "Delete"
 
   get ingredientsControls() {
     return (this.recipeForm.get('ingredients') as FormArray).controls;
@@ -44,7 +45,7 @@ export class RecipeEditComponent implements OnInit {
     //   this.recipeForm.value['ingredients']);
     if (this.editMode) {
       this.recipeService.updateRecipe(this.id, this.recipeForm.value).subscribe();
-    } else {  
+    } else {
       this.recipeService.addRecipe(this.recipeForm.value).subscribe()
     }
     this.onCancel();
