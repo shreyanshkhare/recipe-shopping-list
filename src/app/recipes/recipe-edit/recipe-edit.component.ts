@@ -16,7 +16,6 @@ export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
-  title = "Delete"
 
   get ingredientsControls() {
     return (this.recipeForm.get('ingredients') as FormArray).controls;

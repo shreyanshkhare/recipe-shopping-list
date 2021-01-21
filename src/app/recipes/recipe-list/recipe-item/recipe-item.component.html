@@ -2,7 +2,8 @@
   routerLinkActive="activeRow">
   <div class="pull-left">
     <h4 class="list-group-item-heading font-bold">{{ recipe.name }}</h4>
-    <p class="list-group-item-text font-normal">{{ recipe.description }}</p>
+    <p class="list-group-item-text font-normal">{{ (recipe.description.length>60)? (recipe.description |
+      slice:0:60)+'...': recipe.description}}</p>
   </div>
   <span class="pull-right">
     <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="w-20 h-20 rounded-full" style="max-height: 50px;">
