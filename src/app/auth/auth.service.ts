@@ -8,6 +8,8 @@ class User {
     constructor(public email: string) {}
 }
 
+const endpoint = "/recipe/api";
+
 @Injectable({providedIn: 'root'})
 export class AuthService {
     user = new BehaviorSubject<User>(null);
@@ -23,7 +25,7 @@ export class AuthService {
     }
 
     signUp(email: string, password: string, afterSuccess: Function) {
-        this.http.post('/recipe/UserRegister',{
+        this.http.post(`${endpoint}/UserRegister`,{
             "username": email,
             "password": password
             }).subscribe(()=>{
@@ -33,7 +35,7 @@ export class AuthService {
 
     login(email: string, password: string, afterSuccess: Function) {
         console.log(email,password)
-        return this.http.post('/recipe/login',{
+        return this.http.post(`${endpoint}/login`,{
             "username": email,
             "password": password
         }

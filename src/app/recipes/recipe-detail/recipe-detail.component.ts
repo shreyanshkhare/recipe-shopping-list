@@ -24,7 +24,6 @@ export class RecipeDetailComponent implements OnInit {
         this.id = +params['id'];
         this.recipe = this.recipeService.getRecipe(this.id)
           this.recipeService.recipesChanged.subscribe((recipes: any) => {
-            console.log('this.recipe', this.recipe)
             this.recipe = recipes.find((data: any) => data.id === this.id);
           })
       }
