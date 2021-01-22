@@ -24,7 +24,7 @@ export class AuthService {
     }
 
     signUp(email: string, password: string, afterSuccess: Function) {
-        this.http.post(endpoint + '/recipe/UserRegister', {
+        this.http.post(endpoint + '/UserRegister', {
             "username": email,
             "password": password
         }).subscribe(() => {
@@ -34,7 +34,7 @@ export class AuthService {
 
     login(email: string, password: string, afterSuccess: Function) {
         console.log(email, password)
-        return this.http.post(endpoint + '/recipe/login', {
+        return this.http.post(endpoint + '/login', {
             "username": email,
             "password": password
         }
