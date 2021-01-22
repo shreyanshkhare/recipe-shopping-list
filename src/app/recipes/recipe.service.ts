@@ -8,7 +8,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-const endpoint = '/recipe/';
+const endpoint = '/recipe/api';
 
 @Injectable()
 
@@ -40,7 +40,7 @@ export class RecipeService {
   }
 
   getRecipes(): Observable<any> {
-    return this.http.get("recipe/recipe").pipe(
+    return this.http.get(endpoint + "/recipe").pipe(
       tap((res: any) => {
         this.recipes = res.recipes
         this.recipesChanged.next(res.recipes)

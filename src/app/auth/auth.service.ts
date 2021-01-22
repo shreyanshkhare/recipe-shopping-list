@@ -4,16 +4,17 @@ import { Router } from "@angular/router";
 import { BehaviorSubject, Observable } from "rxjs";
 
 // ideallay create a model, will do that once we connect to the backend
+const endpoint = '/recipe/api'
 class User {
-    constructor(public email: string) {}
+    constructor(public email: string) { }
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     user = new BehaviorSubject<User>(null);
     authObservable = new Observable();
 
-    constructor(private router: Router, private http:HttpClient) {}
+    constructor(private router: Router, private http: HttpClient) { }
 
     private successHandler(email: string, onSuccess: Function) {
         const user = new User(email);
@@ -23,22 +24,22 @@ export class AuthService {
     }
 
     signUp(email: string, password: string, afterSuccess: Function) {
-        this.http.post('/recipe/UserRegister',{
+        this.http.post(endpoint + '/recipe/UserRegister', {
             "username": email,
             "password": password
-            }).subscribe(()=>{
-                afterSuccess()
-            })
+        }).subscribe(() => {
+            afterSuccess()
+        })
     }
 
     login(email: string, password: string, afterSuccess: Function) {
-        console.log(email,password)
-        return this.http.post('/recipe/login',{
+        console.log(email, password)
+        return this.http.post(endpoint + '/recipe/login', {
             "username": email,
             "password": password
         }
-        ).subscribe((data:any)=>{
-            console.log('data',data)
+        ).subscribe((data: any) => {
+            console.log('data', data)
             // const user = new User(email);
             localStorage.setItem('userData', JSON.stringify(data));
             this.user.next(data);
