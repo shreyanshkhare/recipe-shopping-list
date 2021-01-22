@@ -19,14 +19,18 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     transition('void => *',[
       style({
         opacity:0,
-        transform:'translateX(-100px)'
+        transform:'translateX(-100px)',
+        color:'white',
+        backgroundColor:'green'
       }),
-      animate(400)
+      animate(600)
     ]),
     transition('* => void',[
-      animate(400, style({
+      animate(500, style({
         transform:'translateX(100px)',
-        opacity:0
+        opacity:0,
+        color:'white',
+        backgroundColor:'red'
       }))
     ])
   ])]
