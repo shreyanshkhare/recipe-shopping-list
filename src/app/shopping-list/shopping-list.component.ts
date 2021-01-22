@@ -4,11 +4,32 @@ import { Subscription } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
 import { ToastrService } from 'ngx-toastr';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
+  animations:[trigger('divState',[
+    state('in',style({
+      opacity:1,
+      transform:'translateX(0)'
+    })),
+    transition('void => *',[
+      style({
+        opacity:0,
+        transform:'translateX(-100px)'
+      }),
+      animate(400)
+    ]),
+    transition('* => void',[
+      animate(400, style({
+        transform:'translateX(100px)',
+        opacity:0
+      }))
+    ])
+  ])]
 })
 export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[] = [];
