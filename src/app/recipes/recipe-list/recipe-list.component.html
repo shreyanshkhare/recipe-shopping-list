@@ -11,6 +11,7 @@
     <div class="loader"></div>
   </div>
   <div class="col-xs-12" *ngIf="!loading">
+    <h2 class="text-center mt-20 font-bold" *ngIf="recipes.length === 0">Recipe not found chef!</h2>
     <app-recipe-item *ngFor="let recipeEl of recipes; let i = index" [recipe]="recipeEl" [index]="recipeEl.id">
     </app-recipe-item>
   </div>

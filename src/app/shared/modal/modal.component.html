@@ -13,8 +13,8 @@
         <ng-content></ng-content>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onClose()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onClose()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onSave()">{{buttonName || "Save changes"}}</button>
       </div>
     </div>
   </div>

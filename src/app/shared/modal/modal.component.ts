@@ -12,6 +12,7 @@ export class ModalComponent implements OnInit{
     @Input() title: string;
     @Output() save = new EventEmitter<void>();
     @Output() close=new EventEmitter<void>();
+    @Input() buttonName:string;
 
     ngOnInit(){
     }
