@@ -9,8 +9,14 @@ export class AuthInterceptorService implements HttpInterceptor {
             return next.handle(req);
         }
 
-        const token  = JSON.parse(localStorage.getItem('userData') || '{}').access_token
-        const modifyReq = req.clone({headers: req.headers.append('Authorization', "JWT " + token)})
+        const token = JSON.parse(localStorage.getItem('userData') || '{}').access_token
+        const modifyReq = req.clone({
+            setHeaders: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Authorization': "JWT " + token
+            }
+        })
         return next.handle(modifyReq);
     }
 }
