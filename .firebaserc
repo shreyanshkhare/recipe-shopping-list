@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "default": "dummy-shopping-site",
-    "production": "dummy-shopping-site"
-  }
-}
