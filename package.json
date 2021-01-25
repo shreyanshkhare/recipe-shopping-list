@@ -22,6 +22,8 @@
     "@ng-bootstrap/ng-bootstrap": "^9.0.0",
     "angular-confirmation-popover": "^6.0.0",
     "bootstrap": "^3.4.1",
+    "cors": "^2.8.5",
+    "firebase": "^8.2.4",
     "firebase-tools": "^9.2.2",
     "ngx-toastr": "^13.2.0",
     "prettier": "^2.2.1",
