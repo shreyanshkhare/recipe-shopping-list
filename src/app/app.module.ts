@@ -11,16 +11,22 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
-import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component";
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { DropdownDirective } from '../app/shared/dropdown.directive'
+import { DropdownDirective } from '../app/shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { AuthComponent } from './auth/auth.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { ModalComponent } from './shared/modal/modal.component';
 import { AuthInterceptorService } from './auth/auth-interceptor';
+import { Store, StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
+import * as fromApp from './store/app.reducer';
+import { Effect, EffectsModule } from '@ngrx/effects';
+import { AddIngredientEffects, DeleteIngredientEffects, ShoppingListEffects, UpdateIngredientEffects } from './shopping-list/store/shopping-list.effects';
+
 
 
 @NgModule({
@@ -50,9 +56,16 @@ import { AuthInterceptorService } from './auth/auth-interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
-  ],  
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },ShoppingListService,],
+    BrowserAnimationsModule,
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([
+      ShoppingListEffects,
+      AddIngredientEffects,
+      UpdateIngredientEffects,
+      DeleteIngredientEffects
+    ])
+  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, ShoppingListService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

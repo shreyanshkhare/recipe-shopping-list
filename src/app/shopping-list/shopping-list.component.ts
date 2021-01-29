@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
-import { ToastrService } from 'ngx-toastr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Store } from '@ngrx/store';
+import * as fromApp from './../store/app.reducer';
+import * as fromShoppingListAction from './store/shopping-list.actions'
 
 
 @Component({
@@ -36,19 +38,19 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ])]
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [];
+
+  ingredients: Observable<{ingredients:Ingredient[]}>;
   private subscription: Subscription;
 
-  constructor(private shoppingList: ShoppingListService, private toastr: ToastrService) { }
+  constructor(
+    private shoppingList: ShoppingListService,
+    private store:Store<fromApp.AppState>
+    ) { }
+
 
   ngOnInit() {
-    this.subscription = this.shoppingList.updatedIngredients.subscribe(
-      (ingredient: Ingredient[]) => this.shoppingList.ingredients = ingredient
-    )
-    this.shoppingList.getIngredients();
-    this.shoppingList.updatedIngredients.subscribe((ingredient: Ingredient[]) => {
-      this.ingredients = ingredient;
-    });
+  this.store.dispatch(new fromShoppingListAction.FetchIngredients())
+  this.ingredients = this.store.select('shoppingList')
   }
 
 
@@ -58,6 +60,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 }

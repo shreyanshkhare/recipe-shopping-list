@@ -26,7 +26,6 @@ export class RecipeService {
   }
   private extractData(res: Response): any {
     const body = res;
-    console.log('body', body)
     return body || {};
   }
 

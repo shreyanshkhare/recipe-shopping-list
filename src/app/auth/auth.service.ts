@@ -41,8 +41,6 @@ export class AuthService {
             "password": password
         }
         ).subscribe((data: any) => {
-            console.log('data', data)
-            // const user = new User(email);
             localStorage.setItem('userData', JSON.stringify(data));
             this.user.next(data);
             afterSuccess();
