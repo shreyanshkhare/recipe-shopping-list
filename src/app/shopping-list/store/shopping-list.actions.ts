@@ -20,7 +20,6 @@ export class GetIngredients implements Action {
 
 export class FetchIngredients implements Action {
     readonly type = FETCH_INGREDIENT;
-    props
     constructor() {}
 }
 
@@ -57,4 +56,4 @@ export class StartDeleteIngredient implements Action {
     constructor(public payload: number) { }
 }
 
-export type ShoppingListActions = AddIngredient | UpdateIngredient | AddIngredients | DeleteIngredient | GetIngredients
+export type ShoppingListActions = AddIngredient | UpdateIngredient | AddIngredients | DeleteIngredient | GetIngredients;

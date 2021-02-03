@@ -51,10 +51,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, OnChanges {
                 id: ingredient.id,
                 name: ingredient.name,
                 amount: ingredient.amount
-              })
+              });
             }
-
-          })
+          });
         }
       );
   }
@@ -91,7 +90,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    
+
   }
 
   confirmDelete(): void {

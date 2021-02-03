@@ -3,8 +3,8 @@ import { Ingredient } from "../../shared/ingredient.model";
 import { ADD_INGREDIENT } from './shopping-list.actions'
 import * as ShoppingListActions from './shopping-list.actions'
 
-export interface State{
-    ingredients:Ingredient[];
+export interface State {
+    ingredients: Ingredient[];
 }
 
 const initialState = {
@@ -22,8 +22,8 @@ export function shoppingListReducer(
                 ingredients: [...state.ingredients, action.payload]
             };
         case ShoppingListActions.UPDATE_INGREDIENT:
-            let foundIndex = state.ingredients.findIndex(x => x.id == action.payload.index);
-            const updatedIngredients = [...state.ingredients]
+            const foundIndex = state.ingredients.findIndex(x => x.id === action.payload.index);
+            const updatedIngredients = [...state.ingredients];
             updatedIngredients[foundIndex] = action.payload.ingredient;
             return {
                 ...state,
@@ -39,11 +39,11 @@ export function shoppingListReducer(
                 ...state,
                 ingredients: state.ingredients.filter(ingredient => ingredient.id !== action.payload)
             };
-            case ShoppingListActions.GET_INGREDIENTS:
-                return{
-                    ...state,
-                    ingredients:[...state.ingredients,...action.payload]
-                };
+        case ShoppingListActions.GET_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: [...action.payload]
+            };
         default:
             return state;
     }

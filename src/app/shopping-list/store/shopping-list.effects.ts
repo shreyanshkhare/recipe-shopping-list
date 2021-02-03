@@ -10,80 +10,80 @@ import * as fromShoppingList from './shopping-list.actions'
 const endpoint = '/recipe/api/';
 
 @Injectable()
-export class ShoppingListEffects{
+export class ShoppingListEffects {
     @Effect()
     ShoppingList = this.actions$.pipe(
         ofType(fromShoppingList.FETCH_INGREDIENT),
-        switchMap((data:fromShoppingList.FetchIngredients)=>{
+        switchMap((data: fromShoppingList.FetchIngredients) => {
             return this.http.get(endpoint + "shoppingItemList").pipe(
-            map((res: any) => {
-                if (res) {
-                    const response = res.items
-                    return new fromShoppingList.GetIngredients(response)
-                }
-            })
-            )
+                map((res: any) => {
+                    if (res) {
+                        const response = res.items;
+                        return new fromShoppingList.GetIngredients(response);
+                    }
+                })
+            );
         })
-    )
-    constructor(private actions$:Actions, private http:HttpClient,private toastr: ToastrService){}
+    );
+    constructor(private actions$: Actions, private http: HttpClient, private toastr: ToastrService) { }
 }
 
 @Injectable()
-export class AddIngredientEffects{
+export class AddIngredientEffects {
     @Effect()
     addIngredient = this.actions$.pipe(
         ofType(fromShoppingList.START_ADD_INGREDIENTS),
-        switchMap((ingredient:fromShoppingList.StartAddingIngredient)=>{
+        switchMap((ingredient: fromShoppingList.StartAddingIngredient) => {
             return this.http.post(endpoint + "shoppingItem/" + ingredient.payload.name, {
-               "name":ingredient.payload.name,
+                "name": ingredient.payload.name,
                 "amount": ingredient.payload.amount
             }).pipe(
-                map((res:any)=>{
+                map((res: any) => {
                     this.toastr.success("Ingredient Added Successfully", "Success");
-                    return new fromShoppingList.AddIngredient(res)
+                    return new fromShoppingList.AddIngredient(res);
                 })
-            )
+            );
         })
-    )
-    constructor(private actions$:Actions,private http:HttpClient,private toastr: ToastrService){}
+    );
+    constructor(private actions$: Actions, private http: HttpClient, private toastr: ToastrService) { }
 }
 
 
 @Injectable()
-export class UpdateIngredientEffects{
+export class UpdateIngredientEffects {
     @Effect()
     updateIngredient = this.actions$.pipe(
         ofType(fromShoppingList.START_UPDATING_INGREDIENTS),
-        switchMap((ingredient:fromShoppingList.StartUpdatingIngredient)=>{
+        switchMap((ingredient: fromShoppingList.StartUpdatingIngredient) => {
             return this.http.put(endpoint + "shoppingItemUpdate/" + ingredient.payload.index, {
                 "name": ingredient.payload.ingredient.name,
                 "amount": ingredient.payload.ingredient.amount,
                 "id": ingredient.payload.ingredient.id
             }).pipe(
-                map((res:any)=>{
+                map((res: any) => {
                     this.toastr.success("Ingredient Updated Successfully", "Success");
-                    return new fromShoppingList.UpdateIngredient({ index: ingredient.payload.index, ingredient:res })
+                    return new fromShoppingList.UpdateIngredient({ index: ingredient.payload.index, ingredient: res })
                 })
-            )
+            );
         })
-    )
-    constructor(private actions$:Actions,private http:HttpClient,private toastr: ToastrService){}
+    );
+    constructor(private actions$: Actions, private http: HttpClient, private toastr: ToastrService) { }
 }
 
 
 @Injectable()
-export class DeleteIngredientEffects{
+export class DeleteIngredientEffects {
     @Effect()
     updateIngredient = this.actions$.pipe(
         ofType(fromShoppingList.START_DELETE_INGREDIENTS),
-        switchMap((id:fromShoppingList.StartDeleteIngredient)=>{
+        switchMap((id: fromShoppingList.StartDeleteIngredient) => {
             return this.http.delete(endpoint + "shoppingItemUpdate/" + id.payload).pipe(
-                map((res:any)=>{
+                map((res: any) => {
                     this.toastr.success("Ingredient deleted Successfully", "Success");
-                    return new fromShoppingList.DeleteIngredient(id.payload)
+                    return new fromShoppingList.DeleteIngredient(id.payload);
                 })
-            )
+            );
         })
-    )
-    constructor(private actions$:Actions,private http:HttpClient,private toastr: ToastrService){}
+    );
+    constructor(private actions$: Actions, private http: HttpClient, private toastr: ToastrService) { }
 }
